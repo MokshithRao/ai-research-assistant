@@ -1,0 +1,10 @@
+langgraph
+requests
+langchain
+openai
+transformers
+sentence-transformers
+spacy
+numpy
+pandas
+pytest
