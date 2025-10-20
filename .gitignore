@@ -1,1 +1,42 @@
+# Virtual environment
 venv/
+.env/
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Jupyter and temp files
+.ipynb_checkpoints/
+*.log
+*.tmp
+*.bak
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Model and data cache
+*.safetensors
+*.bin
+*.pt
+*.h5
+*.ckpt
+cache/
+data/
+downloads/
+huggingface/
+transformers_cache/
+~$*
+
+# Environment and API keys
+*.env
+.env.*
+
+# Output files
+outputs/
+results/
