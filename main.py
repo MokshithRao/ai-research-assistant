@@ -29,7 +29,7 @@ if __name__ == "__main__":
             print(f"{i}. {paper['title']}")
             print(f"   🧾 Summary: {summary}\n")
 
-    # # Step 4: Generate overall insights
-    # print("\n💡 Overall Insights Across Papers:\n")
-    # insights = insight_agent.analyze(summaries)
-    # print(insights)
+    # Step 4: Generate overall insights
+    print("\n💡 Overall Insights Across Papers:\n")
+    insights = insight_agent.analyze(summaries)
+    print(insights)
