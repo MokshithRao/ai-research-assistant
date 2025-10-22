@@ -1,6 +1,6 @@
 # Virtual environment
 venv/
-.env/
+.env
 
 # Python cache and compiled files
 __pycache__/
@@ -35,7 +35,7 @@ transformers_cache/
 
 # Environment and API keys
 *.env
-.env.*
+
 
 # Output files
 outputs/
