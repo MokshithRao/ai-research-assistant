@@ -9,7 +9,8 @@ if __name__ == "__main__":
     insight_agent = InsightAgent()
 
     # Step 1: Search for papers
-    query = "natural language processing"
+    # query = "natural language processing"
+    query = input("Enter your research topic:")
     papers = search_agent.search_papers(query)
 
     # Step 2: Print search results

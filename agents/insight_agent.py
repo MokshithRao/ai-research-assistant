@@ -1,47 +1,56 @@
 import os
-from openai import OpenAI
 from dotenv import load_dotenv
+from huggingface_hub import InferenceClient
 
+# Load .env variables
 load_dotenv()
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+HF_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
+
+print("🔑 Loaded Hugging Face API key:", HF_API_KEY[:10] + "..." if HF_API_KEY else "❌ Not found")
+
 
 class InsightAgent:
-    """Analyzes multiple paper summaries and produces overall insights."""
+    def __init__(self, model_name="mistralai/Mixtral-8x7B-Instruct-v0.1"):
+        if not HF_API_KEY:
+            raise ValueError("Hugging Face API key not found. Please set HUGGINGFACE_API_KEY in your .env file")
 
-    def __init__(self):
-        self.name = "InsightAgent"
+        self.client = InferenceClient(model=model_name, token=HF_API_KEY)
+        print(f"🧠 Insight model ready: {model_name}")
 
     def analyze(self, summaries):
-        """Generate insights and key takeaways from a list of paper summaries."""
+        """Generate overall insights from summarized research papers."""
         if not summaries:
-            return "No summaries available for analysis."
+            return "No summaries provided for analysis."
 
-        combined_text = "\n\n".join(
-            [f"{i+1}. {s}" for i, s in enumerate(summaries)]
-        )
+        combined = "\n\n".join(summaries)
 
-        prompt = f"""
-        You are an AI research assistant that synthesizes insights across papers.
+        prompt = f"""You are an AI research assistant.
+Given the following research paper summaries, identify:
+- The common themes or trends
+- Differences in methodology or findings
+- Overall insights or conclusions
 
-        Below are summaries of several recent NLP papers:
-        {combined_text}
+Summaries:
+{combined}
 
-        Please provide:
-        1. Common research themes or trends
-        2. Key technical approaches
-        3. Any noteworthy differences or future directions
+Provide your insights in a concise, academic paragraph format."""
 
-        Respond clearly and concisely in bullet points.
-        """
+        print("\n🧠 Generating insights... (this may take a few seconds)\n")
 
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",  # <--- change here
-            messages=[
-                {"role": "system", "content": "You are a research assistant."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-        )
+        try:
+            # ✅ Use chat.completions for Mixtral
+            response = self.client.chat.completions.create(
+                model="mistralai/Mixtral-8x7B-Instruct-v0.1",
+                messages=[
+                    {"role": "system", "content": "You are an expert AI research assistant."},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=300,
+                temperature=0.7,
+            )
 
+            return response.choices[0].message["content"].strip()
 
-        return response.choices[0].message.content.strip()
+        except Exception as e:
+            print("❌ Error generating insights:", e)
+            return "Insight generation failed due to an API error."
