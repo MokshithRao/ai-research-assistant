@@ -1,6 +1,6 @@
+from agents.insight_agent import InsightAgent
 from agents.search_agent import SearchAgent
 from agents.summarizer_agent import SummarizerAgent
-from agents.insight_agent import InsightAgent
 
 if __name__ == "__main__":
     # Initialize agents
@@ -25,8 +25,8 @@ if __name__ == "__main__":
     print("\n📝 Summarized Papers:\n")
     summaries = []
     for i, paper in enumerate(papers, 1):
-        if paper.get('summary'):
-            summary = summarizer_agent.summarize_text(paper['summary'])
+        if paper.get("summary"):
+            summary = summarizer_agent.summarize_text(paper["summary"])
             summaries.append(summary)
             print(f"{i}. {paper['title']}")
             print(f"   🧾 Summary: {summary}\n")

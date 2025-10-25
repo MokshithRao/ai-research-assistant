@@ -1,12 +1,14 @@
 import pytest
+
+from agents.insight_agent import InsightAgent
 from agents.search_agent import SearchAgent
 from agents.summarizer_agent import SummarizerAgent
-from agents.insight_agent import InsightAgent
+
 
 def test_full_pipeline():
     query = "artificial intelligence ethics"
 
-    search_agent = SearchAgent(max_results=1)
+    search_agent = SearchAgent()
     summarizer_agent = SummarizerAgent()
     insight_agent = InsightAgent()
 

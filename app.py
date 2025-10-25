@@ -1,7 +1,8 @@
 import streamlit as st
+
+from agents.insight_agent import InsightAgent
 from agents.search_agent import SearchAgent
 from agents.summarizer_agent import SummarizerAgent
-from agents.insight_agent import InsightAgent
 
 st.set_page_config(page_title="AI Research Assistant", page_icon="🧠", layout="wide")
 
@@ -23,9 +24,9 @@ if st.button("Search and Analyze"):
         summarizer = SummarizerAgent()
 
         for paper in papers:
-            st.subheader(paper['title'])
+            st.subheader(paper["title"])
             st.markdown(f"[View Paper]({paper['url']})")
-            summary = summarizer.summarize_text(paper['summary'])
+            summary = summarizer.summarize_text(paper["summary"])
             summaries.append(summary)
             st.write(summary)
             st.divider()

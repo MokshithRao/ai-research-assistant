@@ -1,2 +1,5 @@
-import requests, langchain, transformers
+import langchain
+import requests
+import transformers
+
 print("✅ All core libraries imported successfully!")
