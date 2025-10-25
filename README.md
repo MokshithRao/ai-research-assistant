@@ -19,14 +19,19 @@ Built using **Python**, Hugging Face Inference API, and arXiv.
 
 ```
 ai-research-assistant/
-├─ agents/
-│  ├─ search_agent.py        # Handles paper search (arXiv API)
-│  ├─ summarizer_agent.py    # Summarizes abstracts using Hugging Face model
-│  ├─ insight_agent.py       # Generates overall insights across papers
-├─ main.py                   # Orchestrates the entire pipeline
-├─ .env                      # Stores Hugging Face API key
-├─ requirements.txt
-└─ README.md
+├─ agents/                   # agent implementations (search, summarize, insight)
+│  ├─ search_agent.py
+│  ├─ summarizer_agent.py
+│  └─ insight_agent.py
+├─ app.py                    # Streamlit UI
+├─ main.py                   # CLI runner / pipeline orchestrator
+├─ tests/                    # Unit and integration tests
+├─ utils/                    # small helpers (sanitization, moderation)
+├─ logs/                     # runtime logs (should be gitignored)
+├─ requirements.txt          # minimal runtime dependencies (Streamlit + core libs)
+├─ requirements-dev.txt      # dev dependencies (pytest, linters)
+├─ .env.example              # sample env vars (copy to .env locally)
+├─ README.md
 ```
 
 ---

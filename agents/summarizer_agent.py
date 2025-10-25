@@ -1,6 +1,10 @@
 import os
 
-from transformers import logging
+# Optional import for transformers logging: fallback to stdlib logging if missing
+try:
+    from transformers import logging as hf_logging
+except Exception:
+    import logging as hf_logging
 
 try:
     # Optional imports - may fail in minimal/test environments
@@ -25,7 +29,9 @@ class SummarizerAgent:
     ):
         # Disable unwanted HF warnings globally when available
         try:
-            logging.set_verbosity_error()
+            # Use HF logging if available, otherwise stdlib logging has no set_verbosity_error
+            if hasattr(hf_logging, "set_verbosity_error"):
+                hf_logging.set_verbosity_error()
         except Exception:
             pass
 
