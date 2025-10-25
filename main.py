@@ -4,7 +4,7 @@ from agents.insight_agent import InsightAgent
 
 if __name__ == "__main__":
     # Initialize agents
-    search_agent = SearchAgent(max_results=3)
+    search_agent = SearchAgent()
     summarizer_agent = SummarizerAgent()
     insight_agent = InsightAgent()
 
@@ -17,7 +17,8 @@ if __name__ == "__main__":
     print("\n🔍 Search Results:\n")
     for i, paper in enumerate(papers, 1):
         print(f"{i}. {paper['title']}")
-        print(f"   🔗 {paper['link']}")
+        # print(f"   🔗 {paper['link']}")
+        print(f"   🔗 {paper.get('link') or paper.get('url', 'No link available')}")
         print(f"   🧾 Abstract: {paper['summary'][:250]}...\n")
 
     # Step 3: Summarize each paper

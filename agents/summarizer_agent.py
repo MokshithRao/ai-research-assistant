@@ -1,27 +1,46 @@
-from transformers import pipeline
+from transformers import pipeline, logging
+import torch
 
 class SummarizerAgent:
-    """
-    Summarizes text using a transformer model.
-    """
-
     def __init__(self, model_name="facebook/bart-large-cnn"):
-        print("🔧 Loading summarization model... (first time may take 1–2 min)")
-        self.summarizer = pipeline("summarization", model=model_name)
+        # Disable unwanted HF warnings globally
+        logging.set_verbosity_error()
 
-    def summarize_text(self, text, max_length=130, min_length=30):
-        """
-        Generate a concise summary for a given text.
-        """
-        if len(text.split()) < 50:
-            # Skip summarizing very short texts
-            return text
+        device = 0 if torch.cuda.is_available() else -1
+        print(f"Device set to use {'GPU' if device == 0 else 'CPU'}")
 
-        summary = self.summarizer(
-            text,
-            max_length=max_length,
-            min_length=min_length,
-            do_sample=False
-        )[0]['summary_text']
+        self.summarizer = pipeline(
+            "summarization",
+            model=model_name,
+            device=device
+        )
+        print(f"🧠 Summarizer model ready: {model_name}")
 
-        return summary
+    def summarize_text(self, text):
+        """Summarize text with adaptive max_length and no warning spam."""
+        text = text.strip()
+        if not text:
+            return "⚠️ No text provided for summarization."
+
+        input_len = len(text.split())
+
+        # Dynamic summarization length
+        max_length = min(130, max(40, int(input_len * 0.8)))
+        min_length = max(20, int(max_length * 0.4))
+
+        try:
+            result = self.summarizer(
+                text,
+                max_length=max_length,
+                min_length=min_length,
+                do_sample=False,
+            )
+
+            # ✅ Extract the actual text (not the dict)
+            summary = result[0].get("summary_text", "").strip()
+            return summary if summary else "⚠️ Empty summary returned."
+
+        except Exception as e:
+            print(f"❌ Summarization failed: {e}")
+            return "Summarization failed."
+

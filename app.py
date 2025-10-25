@@ -15,7 +15,7 @@ if st.button("Search and Analyze"):
         st.error("Please enter a valid query.")
     else:
         with st.spinner("🔍 Searching papers..."):
-            search = SearchAgent(max_results=3)
+            search = SearchAgent()
             papers = search.search_papers(query)
 
         st.success(f"Found {len(papers)} papers.")
@@ -24,7 +24,7 @@ if st.button("Search and Analyze"):
 
         for paper in papers:
             st.subheader(paper['title'])
-            st.markdown(f"[View Paper]({paper['link']})")
+            st.markdown(f"[View Paper]({paper['url']})")
             summary = summarizer.summarize_text(paper['summary'])
             summaries.append(summary)
             st.write(summary)
