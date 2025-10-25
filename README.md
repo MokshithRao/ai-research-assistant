@@ -19,14 +19,19 @@ Built using **Python**, Hugging Face Inference API, and arXiv.
 
 ```
 ai-research-assistant/
-├─ agents/
-│  ├─ search_agent.py        # Handles paper search (arXiv API)
-│  ├─ summarizer_agent.py    # Summarizes abstracts using Hugging Face model
-│  ├─ insight_agent.py       # Generates overall insights across papers
-├─ main.py                   # Orchestrates the entire pipeline
-├─ .env                      # Stores Hugging Face API key
-├─ requirements.txt
-└─ README.md
+├─ agents/                   # agent implementations (search, summarize, insight)
+│  ├─ search_agent.py
+│  ├─ summarizer_agent.py
+│  └─ insight_agent.py
+├─ app.py                    # Streamlit UI
+├─ main.py                   # CLI runner / pipeline orchestrator
+├─ tests/                    # Unit and integration tests
+├─ utils/                    # small helpers (sanitization, moderation)
+├─ logs/                     # runtime logs (should be gitignored)
+├─ requirements.txt          # minimal runtime dependencies (Streamlit + core libs)
+├─ requirements-dev.txt      # dev dependencies (pytest, linters)
+├─ .env.example              # sample env vars (copy to .env locally)
+├─ README.md
 ```
 
 ---
@@ -57,6 +62,15 @@ Create a `.env` file in the project root with:
 HUGGINGFACE_API_KEY=hf_your_actual_key_here
 ```
 Get your API key from 👉 [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens)
+
+Tip: A sample env file is provided as `.env.sample` — copy it to `.env` and fill in your keys.
+
+
+For development (tests, linters, and formatters), install the dev dependencies:
+
+```powershell
+pip install -r requirements-dev.txt
+```
 
 ---
 
@@ -154,4 +168,19 @@ Ensure your Hugging Face token has Inference API permissions.
 - 🔍 Use semantic search (RAG) for contextual retrieval.
 - 💻 Implement web UI using Streamlit or Gradio.
 - 🐳 Add Docker support for deployment.
+
+## ▶️ Running the Streamlit UI
+
+This project is primarily designed to be used via the included Streamlit app (`app.py`). To run it locally:
+
+```powershell
+pip install -r requirements.txt
+# (optional) set HF key for full features
+$env:HUGGINGFACE_API_KEY = "hf_your_key_here"
+streamlit run app.py
+```
+
+Open your browser at http://127.0.0.1:8501 to access the UI.
+
+
 
