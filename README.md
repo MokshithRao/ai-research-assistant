@@ -151,6 +151,17 @@ You’ll be prompted to enter any research topic:
 
 ---
 
+## Agents and Tools
+
+| Agent           | Role                         | Tools / Technologies Used             |
+|----------------|------------------------------|---------------------------------------|
+| Search Agent   | Fetches AI papers via arXiv API | `requests`, `feedparser`            |
+| Summarizer Agent | Generates abstractive summaries | Hugging Face `facebook/bart-large-cnn` |
+| Insight Agent  | Synthesizes research insights | Mixtral / Falcon                     |
+| Orchestrator   | Coordinates all agents        | Custom Python                         |
+
+---
+
 ## ⚠️ Notes
 
 If you encounter model not supported for text-generation, try a different model like:
@@ -184,3 +195,5 @@ Open your browser at http://127.0.0.1:8501 to access the UI.
 
 
 
+### 📝 License
+This project is released under the MIT License. See the [LICENSE](LICENSE) file for details.
